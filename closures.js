@@ -23,6 +23,9 @@ function outer() {
 */
   
 // Code Here
+const inner = outer()
+
+// console.log(inner)
 
 
 
@@ -52,6 +55,8 @@ function callFriend(name) {
 */
 
 //Code Here
+const callJake = callFriend('Jake') 
+callJake ('435-555-9248')
 
 
 
@@ -63,14 +68,23 @@ function callFriend(name) {
 
 //Code Here
 
-
-
+function makeCounter() {
+  let blerg = 0
+  return function () {
+    blerg += 1
+    return blerg
+  }
+}
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
+
+// console.log(count)
+//  const jibberish = makeCounter()
+//  console.log(jibberish)
 
 
 
@@ -85,19 +99,28 @@ function callFriend(name) {
   http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
 */
 
+//1. Two functions inside counter factory (one that counts up and one that counts down)
+//2. 1st function increments value up?
+//3. 2nd function increments value down?
+//4. It has to use the module pattern?  
+
 function counterFactory(value) {
   // Code here.
-
   return {
-
+    inc: function() {
+      return value += 1
+    },
+    dec: function() {
+      return value -= 1
+    }
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 
@@ -107,15 +130,19 @@ counter = counterFactory(10);
   Inside the motivation function create another function called message that will return the welcome text with the firstname and lastname.
   The final message should say "You're doing awesome, keep it up firstname lastname." 
   (Hint: don't forget to have a space between the firstname and lastname and a period at the end of the sentence.)
-*/
+ */
 
 function motivation( firstname, lastname ) {
   var welcomeText = "You're doing awesome, keep it up";
 
   // code message function here.
+  function message() {
+    return `${welcomeText} ${firstname} ${lastname}.`
+  }
+  
 
   //Uncommment this to return the value of your message function
-  //return message;
+  return message;
 }
 
 var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
@@ -127,6 +154,7 @@ var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up B
 /*
   Inside the module's return object create a publicMethod function that invokes privateMethod (return the result).
   Invoke this by calling module.publicMethod(); outside the module scope
+  1. 
 */
 
 var module = (function() {
@@ -134,6 +162,7 @@ var module = (function() {
     name: "phillip",
     age: 29,
     location: "Utah"
+    
   };
 
   function privateMethod(){
@@ -144,9 +173,11 @@ var module = (function() {
   // outside our lexical scope
   return {
     // Code here.
+    publicMethod() {
+      return privateMethod()
+    }
   };
 })();
-
 
 
 ////////// PROBLEM 7 //////////
@@ -160,12 +191,17 @@ var module = (function() {
 
 function secretNumber() {
   var secret = 143;
-
+  // Code here
   return {
-    // Code here
-  };
+    addToSecret(num) {
+      return secret += num
+    },
+    takeAwayFromSecret(num) {
+      return secret -= num
+    }
+  }
 }
-
+secretNumber()
 
 
 ////////// PROBLEM 8 //////////
@@ -187,10 +223,23 @@ function secretNumber() {
 */
 
 function timeOutCounter() {
+  let logStart = 0
   for (var i = 0; i <= 5; i++) {
     setTimeout(function() {
-      console.log(i);
+      console.log(logStart);
+      logStart += 1
     }, i * 1000);
   }
 }
 timeOutCounter();
+
+
+// Original:
+// function timeOutCounter() {
+//   for (var i = 0; i <= 5; i++) {
+//     setTimeout(function() {
+//       console.log(i);
+//     }, i * 1000);
+//   }
+// }
+// timeOutCounter();
